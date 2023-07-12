@@ -11,6 +11,8 @@ import Login from './Components/Login/Login.jsx';
 import Register from './Components/Register/Register.jsx';
 import AuthProvider from './Components/Provider/AuthProvider.jsx';
 import Home from './Components/Home/Home.jsx';
+import NewsFeed from './Components/NewsFeed/NewsFeed.jsx';
+import Welcome from './Components/Welcome/Welcome.jsx';
 
 
 const router = createBrowserRouter([
@@ -28,8 +30,12 @@ const router = createBrowserRouter([
     element:<Home></Home>,
     children:[
       {
-        path:'/home',
-        element:<Home></Home>
+        path:'/home/feed',
+        element:<NewsFeed></NewsFeed>
+      },
+      {
+        path:'/home/welcome',
+        element:<Welcome></Welcome>
       }
     ]
   }

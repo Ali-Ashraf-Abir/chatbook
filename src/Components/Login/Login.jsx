@@ -13,7 +13,7 @@ const Login = () => {
     const navigate=useNavigate()
 
     if(user){
-        navigate('/home')
+        navigate('/home/welcome')
     }
 
 

@@ -61,7 +61,7 @@ const Register = () => {
                   }).then(() => {
                     // Profile updated!
                     // ...
-                    navigate('/home')
+                    navigate('/home/welcome')
                   }).catch((error) => {
                     // An error occurred
                     // ...
