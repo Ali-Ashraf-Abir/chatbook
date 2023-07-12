@@ -1,7 +1,38 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../Provider/AuthProvider';
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import app from '../Register/Firebase/Firebase.init';
+
+
+const provider = new GoogleAuthProvider(app);
 
 const Login = () => {
+    const { username, auth,user } = useContext(AuthContext)
+
+    const navigate=useNavigate()
+
+    if(user){
+        navigate('/home')
+    }
+
+
+
+    const handleSigninGoogle = () => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+            
+                const user = result.user;
+                
+                console.log(user)
+
+            }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+            });
+    }
 
     const handleLogin=(event)=>{
 
@@ -59,6 +90,9 @@ const Login = () => {
         </div>
       </div>
         </form>
+        <div className=" flex justify-center items-center">
+            <button onClick={handleSigninGoogle} className='btn btn-warning my-6 '>Login With Google</button>
+            </div>
     </div>
   </div>
 </div>
