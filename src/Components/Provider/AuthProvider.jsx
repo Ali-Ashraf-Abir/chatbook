@@ -8,7 +8,8 @@ const auth = getAuth(app);
 
 const AuthProvider = ({children}) => {
 
-    const [user,setUser]=useState('')
+    const [user,setUser]=useState(null)
+    const [currentUser,setCurrentUser]=useState(null)
 
 
 
@@ -29,12 +30,24 @@ const AuthProvider = ({children}) => {
 
     },[])
 
-    console.log(user)
+    useEffect(()=>{
+
+        fetch(`http://localhost:5000/currentuser/${user?.email}`)
+        .then(res=>res.json())
+        .then(data=>{
+            setCurrentUser(data[0])
+        })
+
+
+
+    },[user])
 
     const value={
         username:'Abir',
         auth,
-        user
+        user,
+        setUser,
+        currentUser,setCurrentUser
     }
 
     return (

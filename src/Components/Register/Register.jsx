@@ -39,15 +39,15 @@ const Register = () => {
 
         const form = event.target
         const username = form.username.value
-        const email = form.email.value
+        const email = form.email.value.toLowerCase()
         const password = form.password.value
         const imageUrl=form.url.value
 
-        const useData = {
-            email, password, username ,imageUrl
+        const userData = {
+            email:email, username ,imageUrl
         }
 
-        console.log(useData)
+        console.log(userData)
 
 
         createUserWithEmailAndPassword(auth, email, password)
@@ -62,6 +62,17 @@ const Register = () => {
                     // Profile updated!
                     // ...
                     navigate('/home/welcome')
+
+                    fetch('http://localhost:5000/users',{
+                        method:'POST',
+                        headers:{
+                            'content-type':'application/json'
+                        },
+                        body:JSON.stringify(userData)
+                    })
+                    .then(res=>res.json())
+                    .then(data=>console.log(data))
+
                   }).catch((error) => {
                     // An error occurred
                     // ...
@@ -71,6 +82,7 @@ const Register = () => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                setError(errorMessage)
                 // ..
             });
 

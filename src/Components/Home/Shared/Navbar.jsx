@@ -1,10 +1,29 @@
+import { signOut } from 'firebase/auth';
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Provider/AuthProvider';
 
 const Navbar = () => {
 
-    const {user}=useContext(AuthContext)
+    const {user,auth,setUser,setCurrentUser}=useContext(AuthContext)
 
+    const navigate=useNavigate()
+
+    const handleLogout=()=>{
+
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            setUser(null)
+            setCurrentUser(null)
+          }).catch((error) => {
+            // An error happened.
+          });
+          
+    }
+
+    if(!user){
+        navigate('/')
+    }
     return (
         <div>
             <div className="navbar bg-base-100">
@@ -17,6 +36,7 @@ const Navbar = () => {
         <li><a>NewsFeed</a></li>
         <li><a>Friends</a></li>
         <li><a>Chat</a></li>
+        <li><a href="">My Profile</a></li>
       </ul>
     </div>
     <a className="btn btn-ghost normal-case text-xl">ChatBook</a>
@@ -29,7 +49,7 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <a className="btn">{user?'Logout':''}</a>
+    <a onClick={handleLogout} className="btn">{user?'Logout':''}</a>
   </div>
 </div>
         </div>
